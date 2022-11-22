@@ -5,6 +5,7 @@ import com.sg.vendingmachine.dto.Snack;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface VendingMachineServiceLayer {
      /**
@@ -52,7 +53,7 @@ public interface VendingMachineServiceLayer {
              throws VendingMachinePersistenceException,
              NoItemInventoryException;
 
-     public Snack vendSnack(String code, BigDecimal moneyIn) throws
+     public Map<Coin, Integer> vendSnack(String code, BigDecimal moneyIn) throws
              VendingMachinePersistenceException,
              InsufficientFundsException,
              NoItemInventoryException;

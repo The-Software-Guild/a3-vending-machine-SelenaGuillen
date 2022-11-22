@@ -8,6 +8,7 @@ import com.sg.vendingmachine.dto.Snack;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public class VendingMachineServiceLayerImpl implements VendingMachineServiceLayer{
 
@@ -53,7 +54,7 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
         else return dao.updateSnackAmount(code);
     }
 
-    public Snack vendSnack(String code, BigDecimal moneyIn) throws
+    public Map<Coin, Integer> vendSnack(String code, BigDecimal moneyIn) throws
             VendingMachinePersistenceException,
             InsufficientFundsException,
             NoItemInventoryException {
@@ -65,19 +66,21 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
         if (moneyIn.compareTo(snackToVend.getPrice()) < 0) {
             throw new InsufficientFundsException("Insufficient Funds. You inserted: $" + moneyIn);
         }
+
         //add change calculations here
-
-
-
+        BigDecimal change = calculateChange(moneyIn, snackToVend.getPrice());
+        Map<Coin, Integer> coinAmounts = Change.getChangeInCoins(change);
         //writing to audit dao & profit log
 //        loadProfit();
 //        profit = profit.add(snackToVend.getPrice());
         auditDao.writeAuditEntry(snackToVend.getType() + " SOLD.");
 //        profitLog.writeAuditEntry(profit.toString());
 
-        return updateSnackAmount(code);
+        updateSnackAmount(code);
+        return coinAmounts;
     }
 
-
-    //Sell Snack? add to Dao update inventory and validate money
+    public BigDecimal calculateChange(BigDecimal moneyIn, BigDecimal price) {
+        return moneyIn.subtract(price);
+    }
 }

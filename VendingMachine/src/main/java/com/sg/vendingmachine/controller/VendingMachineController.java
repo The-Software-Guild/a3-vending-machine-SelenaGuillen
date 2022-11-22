@@ -1,18 +1,17 @@
 package com.sg.vendingmachine.controller;
 
-import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Snack;
+import com.sg.vendingmachine.service.Coin;
 import com.sg.vendingmachine.service.InsufficientFundsException;
 import com.sg.vendingmachine.service.NoItemInventoryException;
 import com.sg.vendingmachine.service.VendingMachineServiceLayer;
 import com.sg.vendingmachine.ui.VendingMachineView;
 
 import java.math.BigDecimal;
-import java.util.Scanner;
+import java.util.Map;
 
 public class VendingMachineController {
-    Scanner userInput = new Scanner(System.in);
     private VendingMachineView view;
     private VendingMachineServiceLayer service;
 
@@ -63,11 +62,10 @@ public class VendingMachineController {
             InsufficientFundsException, NoItemInventoryException {
         BigDecimal money = view.printPromptAndCollectMoney();
         String code = view.printPromptAndGetSnackSelection();
-        Snack vendedSnack = service.vendSnack(code, money);
-
-        //get change and return to user in enums service.vendSnack does all the inventory dao stuff
-        //getCalculation should call to service where calculation is made
-        getCalculation(vendedSnack);
+        Snack vendedSnack = service.getSnack(code);
+        Map<Coin, Integer> changeInCoins = service.vendSnack(code, money);
+        view.printChange(money, vendedSnack.getPrice());
+        view.printChangeInCoins(changeInCoins);
     }
 
     private void getCalculation(Snack snack) {

@@ -1,11 +1,13 @@
 package com.sg.vendingmachine.ui;
 
 import com.sg.vendingmachine.dto.Snack;
+import com.sg.vendingmachine.service.Coin;
 import com.sg.vendingmachine.service.InsufficientFundsException;
 import com.sg.vendingmachine.service.NoItemInventoryException;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public class VendingMachineView {
     private UserIO io;
@@ -60,6 +62,37 @@ public class VendingMachineView {
 
     public void printUserMoneyIn(BigDecimal moneyIn) {
         io.print("You inserted $" + moneyIn.toString());
+    }
+
+    public void printChange(BigDecimal moneyIn, BigDecimal price) {
+        io.print("Your change is $" + moneyIn.subtract(price));
+    }
+
+    public void printChangeInCoins(Map<Coin, Integer> coinAmounts) {
+        io.print("You get back: ");
+
+
+        //returns collection view of map
+        for (Map.Entry<Coin, Integer> entry: coinAmounts.entrySet()) {
+            Coin key = entry.getKey();
+            Integer value = entry.getValue();
+
+            switch (key) {
+                case QUARTER:
+                    io.print(value + " quarter(s)");
+                    break;
+                case DIME:
+                    io.print(value + " dime(s)");
+                    break;
+                case NICKEL:
+                    io.print(value + " nickel(s)");
+                    break;
+                case PENNY:
+                    io.print(value + " penny/pennies");
+                    break;
+            }
+        }
+        io.print("\n");
     }
 
 }
