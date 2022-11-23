@@ -60,21 +60,21 @@ public class VendingMachineController {
     private void collectMoneyAndMakeSelection()
             throws VendingMachinePersistenceException,
             InsufficientFundsException, NoItemInventoryException {
+
+        //get money from user
         BigDecimal money = view.printPromptAndCollectMoney();
+
+        //retrieve snack
         String code = view.printPromptAndGetSnackSelection();
         Snack vendedSnack = service.getSnack(code);
+
+        //sell snack and get change in coins
         Map<Coin, Integer> changeInCoins = service.vendSnack(code, money);
+        view.printDivider();
         view.printChange(money, vendedSnack.getPrice());
         view.printChangeInCoins(changeInCoins);
     }
 
-    private void getCalculation(Snack snack) {
-        //return the change in enmum coins
-        System.out.println(snack.getName());
-    }
-    private void errorMessage() {
-        view.printErrorMessage();
-    }
 
     private void unknownCommand() {
         view.printUnknownCommand();

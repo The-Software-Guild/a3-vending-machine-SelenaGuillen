@@ -53,6 +53,16 @@ public interface VendingMachineServiceLayer {
              throws VendingMachinePersistenceException,
              NoItemInventoryException;
 
+     /**
+      * Returns a Map with the Coins and the amount returned to user
+      *
+      * @param code of the snack to be sold
+      * @param moneyIn money user inputs
+      * @return
+      * @throws VendingMachinePersistenceException
+      * @throws InsufficientFundsException
+      * @throws NoItemInventoryException
+      */
      public Map<Coin, Integer> vendSnack(String code, BigDecimal moneyIn) throws
              VendingMachinePersistenceException,
              InsufficientFundsException,

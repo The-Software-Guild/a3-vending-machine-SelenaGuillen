@@ -14,15 +14,11 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
 
     VendingMachineDao dao;
     private VendingMachineAuditDao auditDao;
-    private VendingMachineAuditDao profitLog;
 
-    private BigDecimal profit;
 
-    public VendingMachineServiceLayerImpl(VendingMachineDao dao, VendingMachineAuditDao auditDao,
-                                          VendingMachineAuditDao profitLog) {
+    public VendingMachineServiceLayerImpl(VendingMachineDao dao, VendingMachineAuditDao auditDao) {
         this.dao = dao;
         this.auditDao = auditDao;
-        this.profitLog = profitLog;
     }
 
     @Override
@@ -67,14 +63,10 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
             throw new InsufficientFundsException("Insufficient Funds. You inserted: $" + moneyIn);
         }
 
-        //add change calculations here
         BigDecimal change = calculateChange(moneyIn, snackToVend.getPrice());
         Map<Coin, Integer> coinAmounts = Change.getChangeInCoins(change);
-        //writing to audit dao & profit log
-//        loadProfit();
-//        profit = profit.add(snackToVend.getPrice());
+
         auditDao.writeAuditEntry(snackToVend.getType() + " SOLD.");
-//        profitLog.writeAuditEntry(profit.toString());
 
         updateSnackAmount(code);
         return coinAmounts;

@@ -6,6 +6,7 @@ import com.sg.vendingmachine.dto.SnackType;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class VendingMachineDaoImpl implements VendingMachineDao{
     private final String INVENTORY_FILE;
@@ -16,6 +17,10 @@ public class VendingMachineDaoImpl implements VendingMachineDao{
         INVENTORY_FILE = "Inventory.txt";
     }
 
+    public VendingMachineDaoImpl(String vendingMachineTextFile) {
+        INVENTORY_FILE = vendingMachineTextFile;
+    }
+
     @Override
     public List<Snack> getAllSnacks() throws VendingMachinePersistenceException {
         loadInventory();
@@ -24,13 +29,11 @@ public class VendingMachineDaoImpl implements VendingMachineDao{
     @Override
     public List<Snack> getAllSnacksInStock() throws VendingMachinePersistenceException {
         loadInventory();
-        ArrayList<Snack> snackList = new ArrayList(snacks.values());
-        ArrayList<Snack> availableSnacks = new ArrayList<>();
-        for (Snack snack: snackList) {
-            if (snack.getAmount() > 0) {
-                availableSnacks.add(snack);
-            }
-        }
+        List<Snack> snackList = new ArrayList(snacks.values());
+        List<Snack> availableSnacks = snackList.stream()
+                .filter( (snack -> snack.getAmount() > 0))
+                .collect(Collectors.toList());
+
         return availableSnacks;
     }
 
