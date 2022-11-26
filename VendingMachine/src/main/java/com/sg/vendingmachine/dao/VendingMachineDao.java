@@ -1,7 +1,6 @@
 package com.sg.vendingmachine.dao;
 
 import com.sg.vendingmachine.dto.Snack;
-import com.sg.vendingmachine.service.NoItemInventoryException;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public interface VendingMachineDao {
 
     /**
      * Returns the snack that was sold.
-     * Optional Implementations: Updates the Inventory and Adds to VM profit.
+     * Updates the Inventory by decreasing by 1.
      * Returns null if no such snack exits.
      *
      * @param code vending machine code of the snack to retrieve

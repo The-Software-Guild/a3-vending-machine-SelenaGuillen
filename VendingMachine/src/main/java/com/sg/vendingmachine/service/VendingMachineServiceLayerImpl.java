@@ -1,7 +1,6 @@
 package com.sg.vendingmachine.service;
 
 import com.sg.vendingmachine.dao.VendingMachineAuditDao;
-import com.sg.vendingmachine.dao.VendingMachineAuditDaoFileImpl;
 import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Snack;

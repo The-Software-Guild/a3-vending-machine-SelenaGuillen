@@ -2,6 +2,7 @@ package com.sg.vendingmachine.dao;
 
 import com.sg.vendingmachine.dto.Snack;
 import com.sg.vendingmachine.dto.SnackType;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VendingMachineDaoImplTest {
 
-    VendingMachineDao testDao;
+    static VendingMachineDao testDao;
 
     public VendingMachineDaoImplTest() {
 
@@ -27,6 +28,7 @@ class VendingMachineDaoImplTest {
         String testFile = "testvendingmachine.txt";
         testDao = new VendingMachineDaoImpl(testFile);
     }
+
     @Test
     void getAllSnacks() throws Exception{
         /* test file preloaded with the following:
@@ -47,12 +49,13 @@ class VendingMachineDaoImplTest {
         List<Snack> snacksInStock = testDao.getAllSnacksInStock();
 
         assertNotNull(snacksInStock, "List is not null.");
-        assertEquals(1, snacksInStock.size(), "Should only contain one");
+        assertEquals(1, snacksInStock.size(), "Should only contain one snack.");
     }
 
     @Test
     void getSnack() throws Exception {
         Snack retrievedSnack = testDao.getSnack("C2");
+        assertEquals("C2", retrievedSnack.getCode());
         assertEquals("Oreos", retrievedSnack.getName(), "Should reflect the same name.");
         assertEquals(SnackType.OREOS, retrievedSnack.getType(), "Type should be the same.");
         assertEquals(BigDecimal.valueOf(1.50).setScale(2, RoundingMode.HALF_EVEN), retrievedSnack.getPrice());
@@ -61,10 +64,9 @@ class VendingMachineDaoImplTest {
 
     @Test
     void updateSnackAmount() throws Exception{
-        Snack snackToUpdate = testDao.getSnack("B1");
-        testDao.updateSnackAmount("B1");
+        Snack snackToUpdate = testDao.updateSnackAmount("B1");
         //Before running this test, ensure Lay's is stocked with 10 since
-        //this field cannot be modified in the program
+        //this field cannot be modified in the program, have to manually reset
         assertEquals(9, snackToUpdate.getAmount(), "The amount should have decreased by 1.");
     }
 }
