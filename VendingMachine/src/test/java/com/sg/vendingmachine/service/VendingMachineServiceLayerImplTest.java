@@ -6,6 +6,10 @@ import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Snack;
 import com.sg.vendingmachine.dto.SnackType;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,11 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class VendingMachineServiceLayerImplTest {
     private VendingMachineServiceLayer service;
 
+    @Autowired
     public VendingMachineServiceLayerImplTest() {
-        VendingMachineDao dao = new VendingMachineDaoStubImpl();
-        VendingMachineAuditDao auditDao = new VendingMachineAuditDaoStubImpl();
+//        VendingMachineDao dao = new VendingMachineDaoStubImpl();
+//        VendingMachineAuditDao auditDao = new VendingMachineAuditDaoStubImpl();
+//
+//        service = new VendingMachineServiceLayerImpl(dao, auditDao);
+        ApplicationContext appContext
+                = new ClassPathXmlApplicationContext("applicationContext.xml");
+        service = appContext.getBean("service", VendingMachineServiceLayer.class);
 
-        service = new VendingMachineServiceLayerImpl(dao, auditDao);
     }
 
     @Test
@@ -38,7 +47,7 @@ class VendingMachineServiceLayerImplTest {
     @Test
     public void testInvalidSnackPurchase() {
         Snack testSnack = new Snack();
-        testSnack.setCode("B1");
+        testSnack.setCode("C1");
         testSnack.setName("Lay's Potato Chips");
         testSnack.setType(SnackType.LAYS_POTATO_CHIPS);
         testSnack.setPrice(BigDecimal.valueOf(1.50));
@@ -52,8 +61,8 @@ class VendingMachineServiceLayerImplTest {
 
 
         assertThrows(NoItemInventoryException.class, () -> {
-            tempService.vendSnack("B1", BigDecimal.valueOf(5.00));
-        }, "NoItemInventoryException should be thrown because the item does not exist/is not in stock.");
+            tempService.vendSnack("C1", BigDecimal.valueOf(5.00));
+        }, "NoItemInventoryException should be thrown because the item is not in stock.");
     }
 
     @Test

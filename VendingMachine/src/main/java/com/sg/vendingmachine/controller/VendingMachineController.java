@@ -7,14 +7,18 @@ import com.sg.vendingmachine.service.InsufficientFundsException;
 import com.sg.vendingmachine.service.NoItemInventoryException;
 import com.sg.vendingmachine.service.VendingMachineServiceLayer;
 import com.sg.vendingmachine.ui.VendingMachineView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
+@Component
 public class VendingMachineController {
     private VendingMachineView view;
     private VendingMachineServiceLayer service;
 
+    @Autowired
     public VendingMachineController(VendingMachineServiceLayer service, VendingMachineView view) {
         this.view = view;
         this.service = service;
@@ -73,6 +77,7 @@ public class VendingMachineController {
         view.printDivider();
         view.printChange(money, vendedSnack.getPrice());
         view.printChangeInCoins(changeInCoins);
+        view.printContinuePrompt();
     }
 
 

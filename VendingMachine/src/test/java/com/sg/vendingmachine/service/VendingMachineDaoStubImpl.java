@@ -4,17 +4,21 @@ import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Snack;
 import com.sg.vendingmachine.dto.SnackType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class VendingMachineDaoStubImpl implements VendingMachineDao {
 
 
     public Snack onlySnack = new Snack();
     public List<Snack> snackList = new ArrayList<>();
+    @Autowired
     public VendingMachineDaoStubImpl() {
         onlySnack.setCode("A1");
         onlySnack.setName("Oreos");

@@ -4,17 +4,21 @@ import com.sg.vendingmachine.dao.VendingMachineAuditDao;
 import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Snack;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class VendingMachineServiceLayerImpl implements VendingMachineServiceLayer{
 
     VendingMachineDao dao;
     private VendingMachineAuditDao auditDao;
 
 
+    @Autowired
     public VendingMachineServiceLayerImpl(VendingMachineDao dao, VendingMachineAuditDao auditDao) {
         this.dao = dao;
         this.auditDao = auditDao;
@@ -31,22 +35,30 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
     }
 
     @Override
-    public Snack getSnack(String code) throws VendingMachinePersistenceException {
-        return dao.getSnack(code);
+    public Snack getSnack(String code) throws
+            VendingMachinePersistenceException,
+            NoItemInventoryException{
+        try {
+            return dao.getSnack(code);
+        } catch (NullPointerException e) {
+            throw new NoItemInventoryException("Item is not in stock or does not exist. Please try again.");
+        }
     }
 
     @Override
     public Snack updateSnackAmount(String code) throws
             VendingMachinePersistenceException,
             NoItemInventoryException {
-        Snack updatedSnack = getSnack(code);
 
-        //tries updateSnackAmount when a sale is made
-        if (updatedSnack.getAmount() <= 0) {
-            throw new NoItemInventoryException("Item is not in stock. Please try again.");
+        try {
+            Snack updatedSnack = getSnack(code);
+            if (updatedSnack.getAmount() <= 0) {
+                throw new NoItemInventoryException("Item is not in stock or does not exist. Please try again.");
+            }
+            else return dao.updateSnackAmount(code);
+        } catch (NullPointerException e) {
+            throw new NoItemInventoryException("Item is not in stock or does not exist. Please try again.");
         }
-        //dao writes to file and updates the inventory
-        else return dao.updateSnackAmount(code);
     }
 
     public Map<Coin, Integer> vendSnack(String code, BigDecimal moneyIn) throws

@@ -2,6 +2,8 @@ package com.sg.vendingmachine.service;
 
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Snack;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,7 +38,7 @@ public interface VendingMachineServiceLayer {
       */
 
      Snack getSnack(String code)
-             throws VendingMachinePersistenceException;
+             throws VendingMachinePersistenceException, NoItemInventoryException;
 
      /**
       * Returns the snack that was sold.

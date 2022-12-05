@@ -1,2 +1,2 @@
-B1::Lay's Potato Chips::LAYS_POTATO_CHIPS::1.25::10
+B1::Lay's Potato Chips::LAYS_POTATO_CHIPS::1.25::9
 C2::Oreos::OREOS::1.50::0

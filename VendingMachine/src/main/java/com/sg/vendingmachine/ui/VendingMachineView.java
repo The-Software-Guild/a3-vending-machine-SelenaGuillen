@@ -4,14 +4,18 @@ import com.sg.vendingmachine.dto.Snack;
 import com.sg.vendingmachine.service.Coin;
 import com.sg.vendingmachine.service.InsufficientFundsException;
 import com.sg.vendingmachine.service.NoItemInventoryException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class VendingMachineView {
     private UserIO io;
 
+    @Autowired
     public VendingMachineView(UserIO io) {
         this.io = io;
     }
@@ -48,9 +52,6 @@ public class VendingMachineView {
     public void printUnknownCommand() {
         io.print("Unknown Command. Please try again.");
     }
-    public void printErrorMessage() {
-        io.print("ERROR");
-    }
 
     public void printInsufficientFundsMessage(InsufficientFundsException e) {
         io.print(e.getMessage());
@@ -58,10 +59,6 @@ public class VendingMachineView {
 
     public void printNoItemAvailableMessage(NoItemInventoryException e) {
         io.print(e.getMessage());
-    }
-
-    public void printUserMoneyIn(BigDecimal moneyIn) {
-        io.print("You inserted $" + moneyIn.toString());
     }
 
     public void printChange(BigDecimal moneyIn, BigDecimal price) {
@@ -93,6 +90,9 @@ public class VendingMachineView {
             }
         }
         io.print("\n");
+    }
+    public void printContinuePrompt() {
+        io.readString("Please hit enter to continue");
     }
 
 }

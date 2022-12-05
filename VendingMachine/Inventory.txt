@@ -1,4 +1,4 @@
-A1::Hot Cheetos::HOT_CHEETOS::1.25::10
+A1::Hot Cheetos::HOT_CHEETOS::1.25::9
 B2::Ruffles Cheddar Chips::RUFFLES_CHEDDAR_CHIPS::1.25::10
 A2::Chesters Hot Fries::HOT_FRIES::1.50::10
 E1::Strawberry PopTart::POPTART::1.75::10
@@ -6,5 +6,5 @@ D1::Twix::TWIX_BAR::1.25::10
 E2::Pure Protein Bar - Chocolate::CHOCOLATE_PROTEIN_BAR::2.25::10
 C1::Chips Ahoy Cookies::CHIPS_AHOY_COOKIES::1.50::10
 D2::Reese's::REESES::1.50::7
-B1::Lay's Potato Chips::LAYS_POTATO_CHIPS::1.25::10
+B1::Lay's Potato Chips::LAYS_POTATO_CHIPS::1.25::8
 C2::Oreos::OREOS::1.50::0

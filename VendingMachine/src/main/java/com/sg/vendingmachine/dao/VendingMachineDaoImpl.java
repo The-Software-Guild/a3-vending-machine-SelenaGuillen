@@ -2,17 +2,21 @@ package com.sg.vendingmachine.dao;
 
 import com.sg.vendingmachine.dto.Snack;
 import com.sg.vendingmachine.dto.SnackType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class VendingMachineDaoImpl implements VendingMachineDao{
     private final String INVENTORY_FILE;
     public static final String DELIMITER = "::";
     private Map<String, Snack> snacks = new HashMap<>();
 
+    @Autowired
     public VendingMachineDaoImpl() {
         INVENTORY_FILE = "Inventory.txt";
     }
@@ -23,6 +27,7 @@ public class VendingMachineDaoImpl implements VendingMachineDao{
 
     @Override
     public List<Snack> getAllSnacks() throws VendingMachinePersistenceException {
+        VendingMachineDao dao = new VendingMachineDaoImpl("testing.txt");
         loadInventory();
         return new ArrayList(snacks.values());
     }
