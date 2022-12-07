@@ -68,7 +68,6 @@ public class VendingMachineView {
     public void printChangeInCoins(Map<Coin, Integer> coinAmounts) {
         io.print("You get back: ");
 
-
         //returns collection view of map
         for (Map.Entry<Coin, Integer> entry: coinAmounts.entrySet()) {
             Coin key = entry.getKey();
@@ -89,7 +88,6 @@ public class VendingMachineView {
                     break;
             }
         }
-        io.print("\n");
     }
     public void printContinuePrompt() {
         io.readString("Please hit enter to continue");

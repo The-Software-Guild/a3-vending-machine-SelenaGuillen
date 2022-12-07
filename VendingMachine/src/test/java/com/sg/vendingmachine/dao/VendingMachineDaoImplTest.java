@@ -2,11 +2,9 @@ package com.sg.vendingmachine.dao;
 
 import com.sg.vendingmachine.dto.Snack;
 import com.sg.vendingmachine.dto.SnackType;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;

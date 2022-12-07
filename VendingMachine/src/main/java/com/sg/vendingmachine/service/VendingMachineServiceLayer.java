@@ -2,8 +2,7 @@ package com.sg.vendingmachine.service;
 
 import com.sg.vendingmachine.dao.VendingMachinePersistenceException;
 import com.sg.vendingmachine.dto.Snack;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
+
 
 import java.math.BigDecimal;
 import java.util.List;

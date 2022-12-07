@@ -8,11 +8,9 @@ import com.sg.vendingmachine.dto.SnackType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,10 +19,7 @@ class VendingMachineServiceLayerImplTest {
 
     @Autowired
     public VendingMachineServiceLayerImplTest() {
-//        VendingMachineDao dao = new VendingMachineDaoStubImpl();
-//        VendingMachineAuditDao auditDao = new VendingMachineAuditDaoStubImpl();
-//
-//        service = new VendingMachineServiceLayerImpl(dao, auditDao);
+
         ApplicationContext appContext
                 = new ClassPathXmlApplicationContext("applicationContext.xml");
         service = appContext.getBean("service", VendingMachineServiceLayer.class);
